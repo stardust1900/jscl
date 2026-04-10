@@ -76,7 +76,6 @@ class _MatchesPageState extends State<MatchesPage> {
     final List<Match> matches = widget.matches;
     if (matches == null || matches.isEmpty) return;
 
-    // 按日期分组
     for (final match in matches) {
       if (match == null) continue;
       final date = match.date;
@@ -91,7 +90,6 @@ class _MatchesPageState extends State<MatchesPage> {
       }
     }
 
-    // 排序日期
     _sortedDates = _matchDates.toList()..sort((a, b) => a.compareTo(b));
   }
 
@@ -127,172 +125,171 @@ class _MatchesPageState extends State<MatchesPage> {
 
     final matchDates = _getMatchDates();
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
 
     return Stack(
       children: [
-        // 赛程列表（右侧留出空间给日历）
-        Padding(
-          padding: const EdgeInsets.only(right: 210),
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _sortedDates.map((date) {
-                final dayMatches = _groupedMatches[date];
-                if (dayMatches == null || dayMatches.isEmpty) {
-                  return const SizedBox.shrink();
-                }
-                final dateKey = DateTime(date.year, date.month, date.day);
-                return Column(
-                  key: _dateKeys[dateKey],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      color: Colors.grey[200],
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: Text(
-                        _formatDate(date),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+        SingleChildScrollView(
+          controller: _scrollController,
+          padding: EdgeInsets.only(right: isWideScreen ? 210 : screenWidth / 3),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _sortedDates.map((date) {
+              final dayMatches = _groupedMatches[date];
+              if (dayMatches == null || dayMatches.isEmpty) {
+                return const SizedBox.shrink();
+              }
+              final dateKey = DateTime(date.year, date.month, date.day);
+              return Column(
+                key: _dateKeys[dateKey],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      _formatDate(date),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
-                    ...dayMatches.map((match) => _buildMatchCard(match)),
-                  ],
-                );
-              }).toList(),
+                  ),
+                  ...dayMatches.map((match) => _buildMatchCard(match, isWideScreen)),
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+        if (isWideScreen)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SizedBox(
+              width: 200,
+              height: screenHeight * 0.4,
+              child: _buildCalendarPanel(matchDates),
+            ),
+          )
+        else
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SizedBox(
+              width: screenWidth / 3,
+              height: screenHeight / 3,
+              child: _buildCalendarPanel(matchDates),
             ),
           ),
-        ),
-        // 日历面板（右上角）
-        Positioned(
-          top: 0,
-          right: 0,
-          child: SizedBox(
-            width: 200,
-            height: screenHeight * 0.4,
-            child: _buildCalendarPanel(matchDates),
-          ),
-        ),
       ],
     );
   }
 
   Widget _buildCalendarPanel(Set<DateTime>? matchDates) {
     if (matchDates == null) matchDates = {};
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-      ),
-      child: Column(
-        children: [
-          // 月份选择器
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.chevron_left, size: 20),
-                  onPressed: () {
-                    setState(() {
-                      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
-                    });
-                  },
-                ),
-                Text(
-                  '${_currentMonth.year}年${_currentMonth.month}月',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.chevron_right, size: 20),
-                  onPressed: () {
-                    setState(() {
-                      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
-                    });
-                  },
-                ),
-              ],
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final panelWidth = constraints.maxWidth;
+        final titleFontSize = (panelWidth / 15).clamp(10.0, 14.0);
+        final dayFontSize = (panelWidth / 28).clamp(8.0, 12.0);
+        final legendFontSize = (panelWidth / 28).clamp(8.0, 12.0);
+
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[50],
+            border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
           ),
-          // 星期标题
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Text('日', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 12)),
-                Text('一', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                Text('二', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                Text('三', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                Text('四', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                Text('五', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                Text('六', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 12)),
-              ],
-            ),
-          ),
-          // 日历网格
-          Expanded(
-            child: _buildCalendarGrid(matchDates),
-          ),
-          // 图例说明
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(top: BorderSide(color: Colors.grey[300]!)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
                 ),
-                const SizedBox(width: 4),
-                Text('有比赛', style: TextStyle(fontSize: 12, color: Colors.grey[700])),
-                const SizedBox(width: 16),
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.chevron_left, size: panelWidth * 0.08),
+                      constraints: BoxConstraints(minWidth: panelWidth * 0.15, minHeight: panelWidth * 0.08),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
+                        });
+                      },
+                    ),
+                    Flexible(
+                      child: Text(
+                        '${_currentMonth.year}年${_currentMonth.month}月',
+                        style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.chevron_right, size: panelWidth * 0.08),
+                      constraints: BoxConstraints(minWidth: panelWidth * 0.15, minHeight: panelWidth * 0.08),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
+                        });
+                      },
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 4),
-                Text('无比赛', style: TextStyle(fontSize: 12, color: Colors.grey[700])),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('日', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: dayFontSize)),
+                    Text('一', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
+                    Text('二', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
+                    Text('三', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
+                    Text('四', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
+                    Text('五', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
+                    Text('六', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: dayFontSize)),
+                  ],
+                ),
+              ),
+              Expanded(child: _buildCalendarGrid(matchDates!, dayFontSize)),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(top: BorderSide(color: Colors.grey[300]!)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(2))),
+                    SizedBox(width: 2),
+                    Text('有', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                    SizedBox(width: 8),
+                    Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(2))),
+                    SizedBox(width: 2),
+                    Text('无', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildCalendarGrid(Set<DateTime> matchDates) {
+  Widget _buildCalendarGrid(Set<DateTime> matchDates, double dayFontSize) {
     if (matchDates.isEmpty) {
       return GridView.builder(
-        padding: const EdgeInsets.all(8),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 7,
-          childAspectRatio: 1,
-        ),
+        padding: const EdgeInsets.all(2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7, childAspectRatio: 1),
         itemCount: 42,
         itemBuilder: (context, index) => const SizedBox.shrink(),
       );
@@ -302,7 +299,6 @@ class _MatchesPageState extends State<MatchesPage> {
     final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
     final firstWeekday = firstDayOfMonth.weekday % 7;
 
-    // 预计算当月有比赛的日期集合
     final matchDatesInMonth = <int>{};
     for (final date in matchDates) {
       if (date.year == _currentMonth.year && date.month == _currentMonth.month) {
@@ -311,15 +307,11 @@ class _MatchesPageState extends State<MatchesPage> {
     }
 
     return GridView.builder(
-      padding: const EdgeInsets.all(8),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 7,
-        childAspectRatio: 1,
-      ),
+      padding: const EdgeInsets.all(2),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7, childAspectRatio: 1),
       itemCount: 42,
       itemBuilder: (context, index) {
         final dayNumber = index - firstWeekday + 1;
-
         if (dayNumber < 1 || dayNumber > daysInMonth) {
           return const SizedBox.shrink();
         }
@@ -328,34 +320,35 @@ class _MatchesPageState extends State<MatchesPage> {
         final hasMatch = matchDatesInMonth.contains(dayNumber);
         final isToday = _isToday(date);
 
-        return GestureDetector(
-          onTap: hasMatch ? () => _scrollToDate(date) : null,
-          child: Container(
-            margin: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: hasMatch ? Colors.blue[100] : Colors.grey[200],
-              borderRadius: BorderRadius.circular(4),
-              border: isToday
-                  ? Border.all(color: Colors.blue, width: 2)
-                  : hasMatch
-                      ? Border.all(color: Colors.blue[300]!, width: 1)
-                      : null,
-            ),
-            child: Center(
-              child: Text(
-                '$dayNumber',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: hasMatch ? FontWeight.bold : FontWeight.normal,
-                  color: hasMatch
-                      ? Colors.blue[800]
-                      : date.weekday == DateTime.sunday || date.weekday == DateTime.saturday
-                          ? Colors.grey[500]
-                          : Colors.grey[600],
+        return LayoutBuilder(
+          builder: (context, cellConstraints) {
+            // 根据单元格宽度自适应字体大小
+            final cellFontSize = (cellConstraints.maxWidth / 2.5).clamp(10.0, 18.0);
+            return GestureDetector(
+              onTap: hasMatch ? () => _scrollToDate(date) : null,
+              child: Container(
+                margin: const EdgeInsets.all(1),
+                decoration: BoxDecoration(
+                  color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
+                    width: isToday ? 2 : 1,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '$dayNumber',
+                    style: TextStyle(
+                      fontSize: cellFontSize,
+                      fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
+                      color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : date.weekday == DateTime.sunday || date.weekday == DateTime.saturday ? Colors.grey[500] : Colors.grey[600],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );
@@ -385,140 +378,49 @@ class _MatchesPageState extends State<MatchesPage> {
     return weekdays[weekday - 1];
   }
 
-  Widget _buildMatchCard(Match match) {
+  Widget _buildMatchCard(Match match, bool isWideScreen) {
     final isCompleted = match.isCompleted;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: isCompleted ? Colors.green[100] : Colors.orange[100],
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      match.status,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isCompleted ? Colors.green[800] : Colors.orange[800],
-                      ),
-                    ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: isCompleted ? Colors.green[100] : Colors.orange[100],
+                    borderRadius: BorderRadius.circular(4),
                   ),
+                  child: Text(match.status, style: TextStyle(fontSize: 12, color: isCompleted ? Colors.green[800] : Colors.orange[800])),
                 ),
                 if (isCompleted && match.result != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      match.result!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.blue[800],
-                      ),
-                    ),
+                    decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(4)),
+                    child: Text(match.result!, style: TextStyle(fontSize: 12, color: Colors.blue[800])),
                   ),
-                Text(
-                  match.time,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Text(match.time, style: TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.w500)),
               ],
             ),
             const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildTeamLogo(match.homeTeam),
-                      const SizedBox(height: 8),
-                      Text(
-                        match.homeTeam,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        '主场',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: isCompleted
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          match.scoreDisplay,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    : const Text(
-                        'VS',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildTeamLogo(match.awayTeam),
-                      const SizedBox(height: 8),
-                      Text(
-                        match.awayTeam,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        '客场',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
             if (isCompleted) ...[
-              const SizedBox(height: 12),
-              const Divider(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
+                child: Text(match.scoreDisplay, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+              ),
               const SizedBox(height: 8),
-              _buildGoalDetails(match),
             ],
+            if (isWideScreen)
+              _buildWideLayout(match)
+            else
+              _buildNarrowLayout(match, isCompleted),
             if (match.venue != null && match.venue!.isNotEmpty) ...[
               const SizedBox(height: 8),
               Row(
@@ -527,17 +429,16 @@ class _MatchesPageState extends State<MatchesPage> {
                   Icon(Icons.location_on, size: 14, color: Colors.grey[500]),
                   const SizedBox(width: 4),
                   Flexible(
-                    child: Text(
-                      match.venue!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    child: Text(match.venue!, style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis),
                   ),
                 ],
               ),
+            ],
+            if (isCompleted) ...[
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              _buildGoalDetails(match),
             ],
           ],
         ),
@@ -545,85 +446,132 @@ class _MatchesPageState extends State<MatchesPage> {
     );
   }
 
+  Widget _buildWideLayout(Match match) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              _buildTeamLogo(match.homeTeam, size: 50),
+              const SizedBox(height: 8),
+              Text(match.homeTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              const SizedBox(height: 4),
+              const Text('主场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            ],
+          ),
+        ),
+        if (!match.isCompleted)
+          const Text('VS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
+        Expanded(
+          child: Column(
+            children: [
+              _buildTeamLogo(match.awayTeam, size: 50),
+              const SizedBox(height: 8),
+              Text(match.awayTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              const SizedBox(height: 4),
+              const Text('客场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNarrowLayout(Match match, bool isCompleted) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  _buildTeamLogo(match.homeTeam, size: 50),
+                  const SizedBox(height: 4),
+                  Text(match.homeTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                  const Text('主场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                ],
+              ),
+            ),
+            if (!isCompleted)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const Text('VS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
+              ),
+            Expanded(
+              child: Column(
+                children: [
+                  _buildTeamLogo(match.awayTeam, size: 50),
+                  const SizedBox(height: 4),
+                  Text(match.awayTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                  const Text('客场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildGoalDetails(Match match) {
     final homeGoalList = match.homeGoals ?? [];
     final awayGoalList = match.awayGoals ?? [];
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: homeGoalList.map((goal) => 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  children: [
-                    Icon(
-                      goal.isOwnGoal 
-                        ? Icons.error_outline 
-                        : goal.isPenalty 
-                          ? Icons.circle_outlined 
-                          : Icons.sports_soccer,
-                      size: 12,
-                      color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
+            children: homeGoalList.map((goal) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Row(
+                children: [
+                  Icon(
+                    goal.isOwnGoal ? Icons.error_outline : goal.isPenalty ? Icons.circle_outlined : Icons.sports_soccer,
+                    size: 12,
+                    color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      goal.isOwnGoal ? '${goal.playerName}(乌龙) ${goal.minute}\'' : '${goal.playerName} ${goal.minute}\'',
+                      style: TextStyle(fontSize: 11, color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700]),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        goal.isOwnGoal 
-                          ? '${goal.playerName}(乌龙) ${goal.minute}\'' 
-                          : '${goal.playerName} ${goal.minute}\'',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700],
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ).toList(),
+            )).toList(),
           ),
         ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: awayGoalList.map((goal) => 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        goal.isOwnGoal 
-                          ? '${goal.minute}\' ${goal.playerName}(乌龙)' 
-                          : '${goal.minute}\' ${goal.playerName}',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700],
-                        ),
-                        textAlign: TextAlign.end,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+            children: awayGoalList.map((goal) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Text(
+                      goal.isOwnGoal ? '${goal.minute}\' ${goal.playerName}(乌龙)' : '${goal.minute}\' ${goal.playerName}',
+                      style: TextStyle(fontSize: 11, color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700]),
+                      textAlign: TextAlign.end,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      goal.isOwnGoal 
-                        ? Icons.error_outline 
-                        : goal.isPenalty 
-                          ? Icons.circle_outlined 
-                          : Icons.sports_soccer,
-                      size: 12,
-                      color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    goal.isOwnGoal ? Icons.error_outline : goal.isPenalty ? Icons.circle_outlined : Icons.sports_soccer,
+                    size: 12,
+                    color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
+                  ),
+                ],
               ),
-            ).toList(),
+            )).toList(),
           ),
         ),
       ],
