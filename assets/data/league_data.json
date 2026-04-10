@@ -149,22 +149,8 @@
       "status": "已结束",
       "result": "平局",
       "venue": "淮安市体育中心体育场",
-      "homeGoals": [
-        {
-          "playerName": "戴虎",
-          "minute": 52,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
-      "awayGoals": [
-        {
-          "playerName": "陈昊",
-          "minute": 88,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ]
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "7",
