@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '足球联赛',
+      title: '江苏省城市足球联赛',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
@@ -70,10 +70,7 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
             children: [
               const CircularProgressIndicator(),
               const SizedBox(height: 16),
-              Text(
-                '加载联赛数据中...',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
+              Text('加载联赛数据中...', style: TextStyle(color: Colors.grey[600])),
             ],
           ),
         ),
@@ -90,10 +87,7 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
               const SizedBox(height: 16),
               Text(_error!, style: TextStyle(color: Colors.red[700])),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _loadData,
-                child: const Text('重新加载'),
-              ),
+              ElevatedButton(onPressed: _loadData, child: const Text('重新加载')),
             ],
           ),
         ),
@@ -129,18 +123,9 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
           });
         },
         destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.calendar_today),
-            label: '赛程',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.table_chart),
-            label: '积分榜',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.sports_soccer),
-            label: '射手榜',
-          ),
+          NavigationDestination(icon: Icon(Icons.calendar_today), label: '赛程'),
+          NavigationDestination(icon: Icon(Icons.table_chart), label: '积分榜'),
+          NavigationDestination(icon: Icon(Icons.sports_soccer), label: '射手榜'),
         ],
       ),
     );
