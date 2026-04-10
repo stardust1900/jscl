@@ -7,25 +7,11 @@
       "homeTeam": "常州队",
       "awayTeam": "南通队",
       "time": "19:35",
-      "status": "已结束",
-      "result": "平局",
+      "status": "未开始",
+      "result": "",
       "venue": "常州奥体中心体育场",
-      "homeGoals": [
-        {
-          "playerName": "苏桥桥",
-          "minute": 34,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
-      "awayGoals": [
-        {
-          "playerName": "李贤成",
-          "minute": 67,
-          "isPenalty": true,
-          "isOwnGoal": false
-        }
-      ]
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "2",
@@ -33,24 +19,11 @@
       "homeTeam": "扬州队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "已结束",
-      "result": "客队胜",
+      "status": "未开始",
+      "result": "",
       "venue": "扬州体育公园体育场",
       "homeGoals": [],
-      "awayGoals": [
-        {
-          "playerName": "俞惠夫",
-          "minute": 28,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "陈伟",
-          "minute": 56,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ]
+      "awayGoals": []
     },
     {
       "id": "3",
@@ -58,29 +31,10 @@
       "homeTeam": "无锡队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "已结束",
-      "result": "主队胜",
+      "status": "未开始",
+      "result": "",
       "venue": "宜兴市体育中心体育场",
-      "homeGoals": [
-        {
-          "playerName": "谢志伟",
-          "minute": 12,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "同乐",
-          "minute": 45,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "李皓然",
-          "minute": 78,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
+      "homeGoals": [],
       "awayGoals": []
     },
     {
@@ -89,31 +43,11 @@
       "homeTeam": "连云港队",
       "awayTeam": "盐城队",
       "time": "19:40",
-      "status": "已结束",
-      "result": "主队胜",
+      "status": "未开始",
+      "result": "",
       "venue": "连云港市体育中心体育场",
-      "homeGoals": [
-        {
-          "playerName": "王志鹏",
-          "minute": 23,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "张浩",
-          "minute": 89,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
-      "awayGoals": [
-        {
-          "playerName": "李瑞龙",
-          "minute": 55,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ]
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "5",
