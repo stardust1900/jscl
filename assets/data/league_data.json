@@ -7,11 +7,25 @@
       "homeTeam": "常州队",
       "awayTeam": "南通队",
       "time": "19:35",
-      "status": "未开始",
+      "status": "已结束",
       "result": "",
       "venue": "常州奥体中心体育场",
-      "homeGoals": [],
-      "awayGoals": []
+      "homeGoals": [
+        {
+          "playerName": "哈哈哈哈",
+          "minute": 1,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "阿巴巴",
+          "minute": 2,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ]
     },
     {
       "id": "2",
