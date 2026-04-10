@@ -175,20 +175,7 @@
       "status": "未开始",
       "result": "主队胜",
       "venue": "徐州奥体中心体育场",
-      "homeGoals": [
-        {
-          "playerName": "邓清华",
-          "minute": 19,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "刘毅臣",
-          "minute": 63,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
+      "homeGoals": [],
       "awayGoals": []
     },
     {
