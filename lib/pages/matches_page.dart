@@ -74,10 +74,9 @@ class _MatchesPageState extends State<MatchesPage> {
     _dateKeys.clear();
 
     final List<Match> matches = widget.matches;
-    if (matches == null || matches.isEmpty) return;
+    if (matches.isEmpty) return;
 
     for (final match in matches) {
-      if (match == null) continue;
       final date = match.date;
       final key = DateTime(date.year, date.month, date.day);
       final list = _groupedMatches[key];
@@ -119,7 +118,7 @@ class _MatchesPageState extends State<MatchesPage> {
   @override
   Widget build(BuildContext context) {
     final List<Match> matches = widget.matches;
-    if (matches == null || matches.isEmpty || _sortedDates.isEmpty) {
+    if (matches.isEmpty || _sortedDates.isEmpty) {
       return const Center(child: Text('暂无赛程数据'));
     }
 
@@ -148,7 +147,10 @@ class _MatchesPageState extends State<MatchesPage> {
                   Container(
                     width: double.infinity,
                     color: Colors.grey[200],
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Text(
                       _formatDate(date),
                       style: const TextStyle(
@@ -158,7 +160,9 @@ class _MatchesPageState extends State<MatchesPage> {
                       ),
                     ),
                   ),
-                  ...dayMatches.map((match) => _buildMatchCard(match, isWideScreen)),
+                  ...dayMatches.map(
+                    (match) => _buildMatchCard(match, isWideScreen),
+                  ),
                 ],
               );
             }).toList(),
@@ -215,28 +219,43 @@ class _MatchesPageState extends State<MatchesPage> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.chevron_left, size: panelWidth * 0.08),
-                      constraints: BoxConstraints(minWidth: panelWidth * 0.15, minHeight: panelWidth * 0.08),
+                      constraints: BoxConstraints(
+                        minWidth: panelWidth * 0.15,
+                        minHeight: panelWidth * 0.08,
+                      ),
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
+                          _currentMonth = DateTime(
+                            _currentMonth.year,
+                            _currentMonth.month - 1,
+                          );
                         });
                       },
                     ),
                     Flexible(
                       child: Text(
                         '${_currentMonth.year}年${_currentMonth.month}月',
-                        style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: titleFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     IconButton(
                       icon: Icon(Icons.chevron_right, size: panelWidth * 0.08),
-                      constraints: BoxConstraints(minWidth: panelWidth * 0.15, minHeight: panelWidth * 0.08),
+                      constraints: BoxConstraints(
+                        minWidth: panelWidth * 0.15,
+                        minHeight: panelWidth * 0.08,
+                      ),
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
+                          _currentMonth = DateTime(
+                            _currentMonth.year,
+                            _currentMonth.month + 1,
+                          );
                         });
                       },
                     ),
@@ -248,13 +267,57 @@ class _MatchesPageState extends State<MatchesPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text('日', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: dayFontSize)),
-                    Text('一', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
-                    Text('二', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
-                    Text('三', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
-                    Text('四', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
-                    Text('五', style: TextStyle(fontWeight: FontWeight.bold, fontSize: dayFontSize)),
-                    Text('六', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: dayFontSize)),
+                    Text(
+                      '日',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '一',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '二',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '三',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '四',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '五',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
+                    Text(
+                      '六',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                        fontSize: dayFontSize,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -268,13 +331,39 @@ class _MatchesPageState extends State<MatchesPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(2))),
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[100],
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
                     SizedBox(width: 2),
-                    Text('有', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                    Text(
+                      '有',
+                      style: TextStyle(
+                        fontSize: legendFontSize,
+                        color: Colors.grey[700],
+                      ),
+                    ),
                     SizedBox(width: 8),
-                    Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(2))),
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
                     SizedBox(width: 2),
-                    Text('无', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                    Text(
+                      '无',
+                      style: TextStyle(
+                        fontSize: legendFontSize,
+                        color: Colors.grey[700],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -289,26 +378,41 @@ class _MatchesPageState extends State<MatchesPage> {
     if (matchDates.isEmpty) {
       return GridView.builder(
         padding: const EdgeInsets.all(2),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7, childAspectRatio: 1),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 7,
+          childAspectRatio: 1,
+        ),
         itemCount: 42,
         itemBuilder: (context, index) => const SizedBox.shrink(),
       );
     }
 
-    final firstDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month, 1);
-    final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
+    final firstDayOfMonth = DateTime(
+      _currentMonth.year,
+      _currentMonth.month,
+      1,
+    );
+    final daysInMonth = DateTime(
+      _currentMonth.year,
+      _currentMonth.month + 1,
+      0,
+    ).day;
     final firstWeekday = firstDayOfMonth.weekday % 7;
 
     final matchDatesInMonth = <int>{};
     for (final date in matchDates) {
-      if (date.year == _currentMonth.year && date.month == _currentMonth.month) {
+      if (date.year == _currentMonth.year &&
+          date.month == _currentMonth.month) {
         matchDatesInMonth.add(date.day);
       }
     }
 
     return GridView.builder(
       padding: const EdgeInsets.all(2),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7, childAspectRatio: 1),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 7,
+        childAspectRatio: 1,
+      ),
       itemCount: 42,
       itemBuilder: (context, index) {
         final dayNumber = index - firstWeekday + 1;
@@ -316,23 +420,40 @@ class _MatchesPageState extends State<MatchesPage> {
           return const SizedBox.shrink();
         }
 
-        final date = DateTime(_currentMonth.year, _currentMonth.month, dayNumber);
+        final date = DateTime(
+          _currentMonth.year,
+          _currentMonth.month,
+          dayNumber,
+        );
         final hasMatch = matchDatesInMonth.contains(dayNumber);
         final isToday = _isToday(date);
 
         return LayoutBuilder(
           builder: (context, cellConstraints) {
             // 根据单元格宽度自适应字体大小
-            final cellFontSize = (cellConstraints.maxWidth / 2.5).clamp(10.0, 18.0);
+            final cellFontSize = (cellConstraints.maxWidth / 2.5).clamp(
+              10.0,
+              18.0,
+            );
             return GestureDetector(
               onTap: hasMatch ? () => _scrollToDate(date) : null,
               child: Container(
                 margin: const EdgeInsets.all(1),
                 decoration: BoxDecoration(
-                  color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
+                  color: isToday
+                      ? Colors.orange[100]
+                      : hasMatch
+                      ? Colors.blue[100]
+                      : Colors.grey[200],
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(
-                    color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
+                    color: isToday && hasMatch
+                        ? Colors.blue
+                        : (isToday
+                              ? Colors.orange
+                              : (hasMatch
+                                    ? Colors.blue[300]!
+                                    : Colors.transparent)),
                     width: isToday ? 2 : 1,
                   ),
                 ),
@@ -341,8 +462,17 @@ class _MatchesPageState extends State<MatchesPage> {
                     '$dayNumber',
                     style: TextStyle(
                       fontSize: cellFontSize,
-                      fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
-                      color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : date.weekday == DateTime.sunday || date.weekday == DateTime.saturday ? Colors.grey[500] : Colors.grey[600],
+                      fontWeight: hasMatch || isToday
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      color: isToday
+                          ? Colors.orange[800]
+                          : hasMatch
+                          ? Colors.blue[800]
+                          : date.weekday == DateTime.sunday ||
+                                date.weekday == DateTime.saturday
+                          ? Colors.grey[500]
+                          : Colors.grey[600],
                     ),
                   ),
                 ),
@@ -356,7 +486,9 @@ class _MatchesPageState extends State<MatchesPage> {
 
   bool _isToday(DateTime date) {
     final now = DateTime.now();
-    return date.year == now.year && date.month == now.month && date.day == now.day;
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 
   String _formatDate(DateTime date) {
@@ -392,28 +524,67 @@ class _MatchesPageState extends State<MatchesPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: isCompleted ? Colors.green[100] : Colors.orange[100],
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text(match.status, style: TextStyle(fontSize: 12, color: isCompleted ? Colors.green[800] : Colors.orange[800])),
+                  child: Text(
+                    match.status,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isCompleted
+                          ? Colors.green[800]
+                          : Colors.orange[800],
+                    ),
+                  ),
                 ),
                 if (isCompleted && match.result != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(4)),
-                    child: Text(match.result!, style: TextStyle(fontSize: 12, color: Colors.blue[800])),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[100],
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      match.result!,
+                      style: TextStyle(fontSize: 12, color: Colors.blue[800]),
+                    ),
                   ),
-                Text(match.time, style: TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.w500)),
+                Text(
+                  match.time,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 12),
             if (isCompleted) ...[
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
-                child: Text(match.scoreDisplay, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  match.scoreDisplay,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
             ],
@@ -429,7 +600,11 @@ class _MatchesPageState extends State<MatchesPage> {
                   Icon(Icons.location_on, size: 14, color: Colors.grey[500]),
                   const SizedBox(width: 4),
                   Flexible(
-                    child: Text(match.venue!, style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis),
+                    child: Text(
+                      match.venue!,
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -455,22 +630,49 @@ class _MatchesPageState extends State<MatchesPage> {
             children: [
               _buildTeamLogo(match.homeTeam, size: 50),
               const SizedBox(height: 8),
-              Text(match.homeTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              Text(
+                match.homeTeam,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 4),
-              const Text('主场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const Text(
+                '主场',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
             ],
           ),
         ),
         if (!match.isCompleted)
-          const Text('VS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
+          const Text(
+            'VS',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            ),
+          ),
         Expanded(
           child: Column(
             children: [
               _buildTeamLogo(match.awayTeam, size: 50),
               const SizedBox(height: 8),
-              Text(match.awayTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              Text(
+                match.awayTeam,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 4),
-              const Text('客场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const Text(
+                '客场',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
             ],
           ),
         ),
@@ -489,23 +691,53 @@ class _MatchesPageState extends State<MatchesPage> {
                 children: [
                   _buildTeamLogo(match.homeTeam, size: 50),
                   const SizedBox(height: 4),
-                  Text(match.homeTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                  const Text('主场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  Text(
+                    match.homeTeam,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    '主场',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
                 ],
               ),
             ),
             if (!isCompleted)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: const Text('VS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: const Text(
+                  'VS',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
             Expanded(
               child: Column(
                 children: [
                   _buildTeamLogo(match.awayTeam, size: 50),
                   const SizedBox(height: 4),
-                  Text(match.awayTeam, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                  const Text('客场', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  Text(
+                    match.awayTeam,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    '客场',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
                 ],
               ),
             ),
@@ -525,53 +757,87 @@ class _MatchesPageState extends State<MatchesPage> {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: homeGoalList.map((goal) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                children: [
-                  Icon(
-                    goal.isOwnGoal ? Icons.error_outline : goal.isPenalty ? Icons.circle_outlined : Icons.sports_soccer,
-                    size: 12,
-                    color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      goal.isOwnGoal ? '${goal.playerName}(乌龙) ${goal.minute}\'' : '${goal.playerName} ${goal.minute}\'',
-                      style: TextStyle(fontSize: 11, color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700]),
-                      overflow: TextOverflow.ellipsis,
+            children: homeGoalList
+                .map(
+                  (goal) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(
+                      children: [
+                        Icon(
+                          goal.isOwnGoal
+                              ? Icons.error_outline
+                              : goal.isPenalty
+                              ? Icons.circle_outlined
+                              : Icons.sports_soccer,
+                          size: 12,
+                          color: goal.isOwnGoal
+                              ? Colors.red[400]
+                              : Colors.green[700],
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            goal.isOwnGoal
+                                ? '${goal.playerName}(乌龙) ${goal.minute}\''
+                                : '${goal.playerName} ${goal.minute}\'',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: goal.isOwnGoal
+                                  ? Colors.red[600]
+                                  : Colors.grey[700],
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            )).toList(),
+                )
+                .toList(),
           ),
         ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: awayGoalList.map((goal) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Text(
-                      goal.isOwnGoal ? '${goal.minute}\' ${goal.playerName}(乌龙)' : '${goal.minute}\' ${goal.playerName}',
-                      style: TextStyle(fontSize: 11, color: goal.isOwnGoal ? Colors.red[600] : Colors.grey[700]),
-                      textAlign: TextAlign.end,
-                      overflow: TextOverflow.ellipsis,
+            children: awayGoalList
+                .map(
+                  (goal) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            goal.isOwnGoal
+                                ? '${goal.minute}\' ${goal.playerName}(乌龙)'
+                                : '${goal.minute}\' ${goal.playerName}',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: goal.isOwnGoal
+                                  ? Colors.red[600]
+                                  : Colors.grey[700],
+                            ),
+                            textAlign: TextAlign.end,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          goal.isOwnGoal
+                              ? Icons.error_outline
+                              : goal.isPenalty
+                              ? Icons.circle_outlined
+                              : Icons.sports_soccer,
+                          size: 12,
+                          color: goal.isOwnGoal
+                              ? Colors.red[400]
+                              : Colors.green[700],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Icon(
-                    goal.isOwnGoal ? Icons.error_outline : goal.isPenalty ? Icons.circle_outlined : Icons.sports_soccer,
-                    size: 12,
-                    color: goal.isOwnGoal ? Colors.red[400] : Colors.green[700],
-                  ),
-                ],
-              ),
-            )).toList(),
+                )
+                .toList(),
           ),
         ),
       ],
