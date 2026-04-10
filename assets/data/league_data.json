@@ -121,24 +121,11 @@
       "homeTeam": "宿迁队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "已结束",
-      "result": "客队胜",
+      "status": "未开始",
+      "result": "",
       "venue": "宿迁奥体中心体育场",
       "homeGoals": [],
-      "awayGoals": [
-        {
-          "playerName": "滕帅",
-          "minute": 31,
-          "isPenalty": false,
-          "isOwnGoal": false
-        },
-        {
-          "playerName": "费尔南多",
-          "minute": 74,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ]
+      "awayGoals": []
     },
     {
       "id": "6",
@@ -147,7 +134,7 @@
       "awayTeam": "扬州队",
       "time": "19:40",
       "status": "未开始",
-      "result": "平局",
+      "result": "",
       "venue": "淮安市体育中心体育场",
       "homeGoals": [],
       "awayGoals": []
@@ -159,7 +146,7 @@
       "awayTeam": "泰州队",
       "time": "19:40",
       "status": "未开始",
-      "result": "主队胜",
+      "result": "",
       "venue": "徐州奥体中心体育场",
       "homeGoals": [],
       "awayGoals": []
