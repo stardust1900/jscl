@@ -7,10 +7,29 @@
       "homeTeam": "常州队",
       "awayTeam": "南通队",
       "time": "19:35",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "主队胜",
       "venue": "常州奥体中心体育场",
-      "homeGoals": [],
+      "homeGoals": [
+        {
+          "playerName": "王宏宇",
+          "minute": 33,
+          "isPenalty": true,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "叶文杰",
+          "minute": 46,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "唐曾琦",
+          "minute": 89,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
       "awayGoals": []
     },
     {
@@ -19,11 +38,18 @@
       "homeTeam": "扬州队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "客队胜",
       "venue": "扬州体育公园体育场",
       "homeGoals": [],
-      "awayGoals": []
+      "awayGoals": [
+        {
+          "playerName": "杨高明",
+          "minute": 58,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ]
     },
     {
       "id": "3",
@@ -31,11 +57,37 @@
       "homeTeam": "无锡队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "主队胜",
       "venue": "宜兴市体育中心体育场",
-      "homeGoals": [],
-      "awayGoals": []
+      "homeGoals": [
+        {
+          "playerName": "刘宇豪",
+          "minute": 26,
+          "isPenalty": true,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "刘宇豪",
+          "minute": 49,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "谢志伟",
+          "minute": 79,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "庄宏彬",
+          "minute": 54,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ]
     },
     {
       "id": "4",
@@ -43,11 +95,24 @@
       "homeTeam": "连云港队",
       "awayTeam": "盐城队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "客队胜",
       "venue": "连云港市体育中心体育场",
       "homeGoals": [],
-      "awayGoals": []
+      "awayGoals": [
+        {
+          "playerName": "温竹新",
+          "minute": 22,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "温竹新",
+          "minute": 56,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ]
     },
     {
       "id": "5",
