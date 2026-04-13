@@ -43,30 +43,28 @@ class StandingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 500;
+
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
       child: DataTable(
-        columnSpacing: 20,
-        horizontalMargin: 16,
+        columnSpacing: isWideScreen ? 12 : 8,
+        horizontalMargin: 8,
         headingRowColor: WidgetStateProperty.all(Colors.blue[50]),
-        columns: const [
-          DataColumn(label: Text('排名', style: TextStyle(fontWeight: FontWeight.bold))),
-          DataColumn(label: Text('球队', style: TextStyle(fontWeight: FontWeight.bold))),
-          DataColumn(label: Text('赛', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('胜', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('平', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('负', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('进球', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('失球', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('净胜球', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
-          DataColumn(label: Text('积分', style: TextStyle(fontWeight: FontWeight.bold)), numeric: true),
+        columns: [
+          DataColumn(label: Text('排名', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 13 : 11))),
+          DataColumn(label: Text('球队', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 13 : 11))),
+          DataColumn(label: Text('赛', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
+          DataColumn(label: Text('胜/平/负', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10))),
+          DataColumn(label: Text('进/失/净', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
+          DataColumn(label: Text('积分', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
         ],
-        rows: standings.map((team) => _buildRow(team)).toList(),
+        rows: standings.map((team) => _buildRow(team, isWideScreen)).toList(),
       ),
     );
   }
 
-  DataRow _buildRow(TeamStandings team) {
+  DataRow _buildRow(TeamStandings team, bool isWideScreen) {
     Color rankColor = Colors.black;
     if (team.rank == 1) {
       rankColor = Colors.amber;
@@ -76,12 +74,16 @@ class StandingsPage extends StatelessWidget {
       rankColor = Colors.brown;
     }
 
+    final fontSize = isWideScreen ? 13.0 : 11.0;
+    final logoSize = isWideScreen ? 24.0 : 20.0;
+    final rankSize = isWideScreen ? 24.0 : 20.0;
+
     return DataRow(
       cells: [
         DataCell(
           Container(
-            width: 28,
-            height: 28,
+            width: rankSize,
+            height: rankSize,
             decoration: BoxDecoration(
               color: team.rank <= 3 ? Color.fromRGBO(rankColor.r.toInt(), rankColor.g.toInt(), rankColor.b.toInt(), 0.1) : null,
               shape: BoxShape.circle,
@@ -91,6 +93,7 @@ class StandingsPage extends StatelessWidget {
                 '${team.rank}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
                   color: team.rank <= 3 ? rankColor : Colors.black54,
                 ),
               ),
@@ -101,36 +104,43 @@ class StandingsPage extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildTeamLogo(team.teamName, size: 28),
-              const SizedBox(width: 8),
-              Text(
-                team.teamName,
-                style: const TextStyle(fontWeight: FontWeight.w500),
+              _buildTeamLogo(team.teamName, size: logoSize),
+              SizedBox(width: isWideScreen ? 6 : 4),
+              Flexible(
+                child: Text(
+                  team.teamName.replaceAll('队', ''),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: fontSize),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
         ),
-        DataCell(Text('${team.played}')),
-        DataCell(Text('${team.won}')),
-        DataCell(Text('${team.drawn}')),
-        DataCell(Text('${team.lost}')),
-        DataCell(Text('${team.goalsFor}')),
-        DataCell(Text('${team.goalsAgainst}')),
+        DataCell(Text('${team.played}', style: TextStyle(fontSize: fontSize))),
+        DataCell(
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('${team.won}', style: TextStyle(fontSize: fontSize, color: Colors.green[700])),
+              Text('/', style: TextStyle(fontSize: fontSize, color: Colors.grey)),
+              Text('${team.drawn}', style: TextStyle(fontSize: fontSize, color: Colors.orange[700])),
+              Text('/', style: TextStyle(fontSize: fontSize, color: Colors.grey)),
+              Text('${team.lost}', style: TextStyle(fontSize: fontSize, color: Colors.red[700])),
+            ],
+          ),
+        ),
         DataCell(
           Text(
-            '${team.goalDifference > 0 ? '+' : ''}${team.goalDifference}',
+            '${team.goalsFor}/${team.goalsAgainst}/${team.goalDifference > 0 ? '+' : ''}${team.goalDifference}',
             style: TextStyle(
-              color: team.goalDifference > 0 
-                ? Colors.green 
-                : team.goalDifference < 0 
-                  ? Colors.red 
-                  : Colors.black,
+              fontSize: fontSize,
+              color: team.goalDifference > 0 ? Colors.green : team.goalDifference < 0 ? Colors.red : Colors.black,
             ),
           ),
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: isWideScreen ? 6 : 4, vertical: 2),
             decoration: BoxDecoration(
               color: Colors.blue[50],
               borderRadius: BorderRadius.circular(4),
@@ -139,6 +149,7 @@ class StandingsPage extends StatelessWidget {
               '${team.points}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: fontSize,
                 color: Colors.blue[800],
               ),
             ),

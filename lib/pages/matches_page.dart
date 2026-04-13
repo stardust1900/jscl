@@ -294,10 +294,10 @@ class _MatchesPageState extends State<MatchesPage> {
         final teamFontSize = (panelWidth / 22).clamp(10.0, 14.0); // 球队字体稍大
 
         // 计算各部分高度
-        final headerHeight = isNarrow ? 30.0 : 36.0;
-        final weekdayRowHeight = isNarrow ? 18.0 : 22.0;
-        final legendHeight = isNarrow ? 24.0 : 28.0;
-        final teamFilterHeight = isNarrow ? 120.0 : 80.0;
+        final headerHeight = isNarrow ? 28.0 : 32.0;
+        final weekdayRowHeight = isNarrow ? 16.0 : 20.0;
+        final legendHeight = isNarrow ? 20.0 : 24.0;
+        final teamFilterHeight = isNarrow ? 220.0 : 130.0;
         // 正方形：行高 = 单元格宽度
         final cellWidth = (panelWidth - 4) / 7;
         final rowHeight = cellWidth;
