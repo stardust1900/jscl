@@ -43,24 +43,33 @@ class StandingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isWideScreen = screenWidth > 500;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tableWidth = constraints.maxWidth * 0.95;
+        final isWideScreen = constraints.maxWidth > 400;
 
-    return SingleChildScrollView(
-      child: DataTable(
-        columnSpacing: isWideScreen ? 12 : 8,
-        horizontalMargin: 8,
-        headingRowColor: WidgetStateProperty.all(Colors.blue[50]),
-        columns: [
-          DataColumn(label: Text('排名', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 13 : 11))),
-          DataColumn(label: Text('球队', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 13 : 11))),
-          DataColumn(label: Text('赛', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
-          DataColumn(label: Text('胜/平/负', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10))),
-          DataColumn(label: Text('进/失/净', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
-          DataColumn(label: Text('积分', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 12 : 10)), numeric: true),
-        ],
-        rows: standings.map((team) => _buildRow(team, isWideScreen)).toList(),
-      ),
+        return SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: tableWidth,
+              child: DataTable(
+                columnSpacing: isWideScreen ? 12 : 6,
+                horizontalMargin: 4,
+                headingRowColor: WidgetStateProperty.all(Colors.blue[50]),
+                columns: [
+                  DataColumn(label: Text('排名', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 15 : 13))),
+                  DataColumn(label: Text('球队', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 15 : 13))),
+                  DataColumn(label: Text('赛', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 14 : 12)), numeric: true),
+                  DataColumn(label: Text('胜/平/负', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 14 : 12))),
+                  DataColumn(label: Text('进/失/净', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 14 : 12)), numeric: true),
+                  DataColumn(label: Text('积分', style: TextStyle(fontWeight: FontWeight.bold, fontSize: isWideScreen ? 14 : 12)), numeric: true),
+                ],
+                rows: standings.map((team) => _buildRow(team, isWideScreen)).toList(),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -74,9 +83,9 @@ class StandingsPage extends StatelessWidget {
       rankColor = Colors.brown;
     }
 
-    final fontSize = isWideScreen ? 13.0 : 11.0;
-    final logoSize = isWideScreen ? 24.0 : 20.0;
-    final rankSize = isWideScreen ? 24.0 : 20.0;
+    final fontSize = isWideScreen ? 15.0 : 13.0;
+    final logoSize = isWideScreen ? 28.0 : 24.0;
+    final rankSize = isWideScreen ? 28.0 : 24.0;
 
     return DataRow(
       cells: [
