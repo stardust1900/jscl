@@ -17,6 +17,29 @@ class _MatchesPageState extends State<MatchesPage> {
   List<DateTime> _sortedDates = [];
   Set<DateTime> _matchDates = {};
   Map<DateTime, GlobalKey> _dateKeys = {};
+  bool _isCalendarCollapsed = false; // 日历收起状态
+  Set<String> _selectedTeams = {}; // 选中的球队
+
+  // 获取所有球队列表
+  Set<String> get _allTeams {
+    final teams = <String>{};
+    for (final match in widget.matches) {
+      teams.add(match.homeTeam);
+      teams.add(match.awayTeam);
+    }
+    return teams;
+  }
+
+  // 根据选中的球队过滤比赛
+  List<Match> get _filteredMatches {
+    if (_selectedTeams.isEmpty) {
+      return widget.matches;
+    }
+    return widget.matches.where((match) {
+      return _selectedTeams.contains(match.homeTeam) ||
+          _selectedTeams.contains(match.awayTeam);
+    }).toList();
+  }
 
   // 队徽映射
   static const Map<String, String> _teamLogos = {
@@ -73,7 +96,7 @@ class _MatchesPageState extends State<MatchesPage> {
     _matchDates.clear();
     _dateKeys.clear();
 
-    final List<Match> matches = widget.matches;
+    final List<Match> matches = _filteredMatches;
     if (matches.isEmpty) return;
 
     for (final match in matches) {
@@ -90,6 +113,30 @@ class _MatchesPageState extends State<MatchesPage> {
     }
 
     _sortedDates = _matchDates.toList()..sort((a, b) => a.compareTo(b));
+  }
+
+  void _toggleTeam(String team) {
+    setState(() {
+      if (_selectedTeams.contains(team)) {
+        _selectedTeams.remove(team);
+      } else {
+        _selectedTeams.add(team);
+      }
+      _processMatches();
+    });
+  }
+
+  void _clearTeamFilter() {
+    setState(() {
+      _selectedTeams.clear();
+      _processMatches();
+    });
+  }
+
+  void _toggleCalendarCollapse() {
+    setState(() {
+      _isCalendarCollapsed = !_isCalendarCollapsed;
+    });
   }
 
   @override
@@ -117,89 +164,133 @@ class _MatchesPageState extends State<MatchesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Match> matches = widget.matches;
+    final List<Match> matches = _filteredMatches;
     if (matches.isEmpty || _sortedDates.isEmpty) {
-      return const Center(child: Text('暂无赛程数据'));
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('暂无赛程数据'),
+            if (_selectedTeams.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: _clearTeamFilter,
+                child: const Text('清除筛选'),
+              ),
+            ],
+          ],
+        ),
+      );
     }
 
     final matchDates = _getMatchDates();
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final isWideScreen = screenWidth > 600;
+    final sidebarWidth = _isCalendarCollapsed ? 0.0 : (isWideScreen ? 200.0 : screenWidth / 3);
 
     return Stack(
       children: [
         SingleChildScrollView(
           controller: _scrollController,
-          padding: EdgeInsets.only(right: isWideScreen ? 210 : screenWidth / 3),
+          padding: EdgeInsets.only(right: sidebarWidth + (sidebarWidth > 0 ? 10 : 0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: _sortedDates.map((date) {
-              final dayMatches = _groupedMatches[date];
-              if (dayMatches == null || dayMatches.isEmpty) {
-                return const SizedBox.shrink();
-              }
-              final dateKey = DateTime(date.year, date.month, date.day);
-              return Column(
-                key: _dateKeys[dateKey],
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: Text(
-                      _formatDate(date),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+            children: [
+              ..._sortedDates.map((date) {
+                final dayMatches = _groupedMatches[date];
+                if (dayMatches == null || dayMatches.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                final dateKey = DateTime(date.year, date.month, date.day);
+                return Column(
+                  key: _dateKeys[dateKey],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      color: Colors.grey[200],
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        _formatDate(date),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
-                  ),
-                  ...dayMatches.map(
-                    (match) => _buildMatchCard(match, isWideScreen),
-                  ),
-                ],
-              );
-            }).toList(),
+                    ...dayMatches.map(
+                      (match) => _buildMatchCard(match, isWideScreen),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ],
           ),
         ),
-        if (isWideScreen)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SizedBox(
-              width: 200,
-              height: screenHeight * 0.4,
-              child: _buildCalendarPanel(matchDates),
+        // 日历收起按钮
+        Positioned(
+          top: 0,
+          right: 0,
+          child: IconButton(
+            icon: Icon(
+              _isCalendarCollapsed ? Icons.chevron_left : Icons.chevron_right,
+              color: Colors.grey[600],
             ),
-          )
-        else
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SizedBox(
-              width: screenWidth / 3,
-              height: screenHeight / 3,
-              child: _buildCalendarPanel(matchDates),
-            ),
+            onPressed: _toggleCalendarCollapse,
+            tooltip: _isCalendarCollapsed ? '展开日历' : '收起日历',
           ),
+        ),
+        // 日历面板和球队筛选
+        if (!_isCalendarCollapsed)
+          if (isWideScreen)
+            Positioned(
+              top: 36,
+              right: 0,
+              child: SizedBox(
+                width: 200,
+                child: _buildCalendarPanel(matchDates, maxHeight: screenHeight * 0.75),
+              ),
+            )
+            else
+            Positioned(
+              top: 36,
+              right: 0,
+              child: SizedBox(
+                width: screenWidth / 3,
+                height: screenHeight * 0.75,
+                child: _buildCalendarPanel(matchDates, maxHeight: screenHeight * 0.75),
+              ),
+            ),
       ],
     );
   }
 
-  Widget _buildCalendarPanel(Set<DateTime>? matchDates) {
+  Widget _buildCalendarPanel(Set<DateTime>? matchDates, {double? maxHeight}) {
     if (matchDates == null) matchDates = {};
     return LayoutBuilder(
       builder: (context, constraints) {
         final panelWidth = constraints.maxWidth;
-        final titleFontSize = (panelWidth / 15).clamp(10.0, 14.0);
+        final isNarrow = panelWidth < 100;
+        final titleFontSize = isNarrow ? 10.0 : (panelWidth / 15).clamp(10.0, 14.0);
         final dayFontSize = (panelWidth / 28).clamp(8.0, 12.0);
         final legendFontSize = (panelWidth / 28).clamp(8.0, 12.0);
+        final teamFontSize = (panelWidth / 22).clamp(10.0, 14.0); // 球队字体稍大
+
+        // 计算各部分高度
+        final headerHeight = isNarrow ? 30.0 : 36.0;
+        final weekdayRowHeight = isNarrow ? 18.0 : 22.0;
+        final legendHeight = isNarrow ? 24.0 : 28.0;
+        final teamFilterHeight = isNarrow ? 120.0 : 80.0;
+        final fixedHeight = headerHeight + weekdayRowHeight + legendHeight + teamFilterHeight + 12;
+        // 正方形：行高 = 单元格宽度
+        final cellWidth = (panelWidth - 4) / 7;
+        final rowHeight = cellWidth;
+        final gridHeight = rowHeight * 6;
 
         return Container(
           decoration: BoxDecoration(
@@ -207,165 +298,123 @@ class _MatchesPageState extends State<MatchesPage> {
             border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.chevron_left, size: panelWidth * 0.08),
-                      constraints: BoxConstraints(
-                        minWidth: panelWidth * 0.15,
-                        minHeight: panelWidth * 0.08,
-                      ),
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          _currentMonth = DateTime(
-                            _currentMonth.year,
-                            _currentMonth.month - 1,
-                          );
-                        });
-                      },
-                    ),
-                    Flexible(
-                      child: Text(
-                        '${_currentMonth.year}年${_currentMonth.month}月',
-                        style: TextStyle(
-                          fontSize: titleFontSize,
-                          fontWeight: FontWeight.bold,
+              // 标题栏
+              SizedBox(
+                height: headerHeight,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: isNarrow ? 24 : panelWidth * 0.15,
+                        child: IconButton(
+                          icon: Icon(Icons.chevron_left, size: isNarrow ? 18 : panelWidth * 0.08),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            setState(() {
+                              _currentMonth = DateTime(
+                                _currentMonth.year,
+                                _currentMonth.month - 1,
+                              );
+                            });
+                          },
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.chevron_right, size: panelWidth * 0.08),
-                      constraints: BoxConstraints(
-                        minWidth: panelWidth * 0.15,
-                        minHeight: panelWidth * 0.08,
+                      Flexible(
+                        child: Text(
+                          '${_currentMonth.year}年${_currentMonth.month}月',
+                          style: TextStyle(
+                            fontSize: titleFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          _currentMonth = DateTime(
-                            _currentMonth.year,
-                            _currentMonth.month + 1,
-                          );
-                        });
-                      },
-                    ),
-                  ],
+                      SizedBox(
+                        width: isNarrow ? 24 : panelWidth * 0.15,
+                        child: IconButton(
+                          icon: Icon(Icons.chevron_right, size: isNarrow ? 18 : panelWidth * 0.08),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            setState(() {
+                              _currentMonth = DateTime(
+                                _currentMonth.year,
+                                _currentMonth.month + 1,
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      '日',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '一',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '二',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '三',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '四',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '五',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                    Text(
-                      '六',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                        fontSize: dayFontSize,
-                      ),
-                    ),
-                  ],
+              // 星期标题行
+              SizedBox(
+                height: weekdayRowHeight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: ['日', '一', '二', '三', '四', '五', '六'].map((w) {
+                      return SizedBox(
+                        width: (panelWidth - 4) / 7,
+                        child: Text(
+                          w,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: w == '日' || w == '六' ? Colors.red : Colors.black,
+                            fontSize: dayFontSize,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-              Expanded(child: _buildCalendarGrid(matchDates!, dayFontSize)),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(color: Colors.grey[300]!)),
+              // 日期网格
+              SizedBox(
+                height: gridHeight > 0 ? gridHeight : 100,
+                child: _buildCalendarGridFixed(matchDates!, rowHeight > 0 ? rowHeight : 16, dayFontSize),
+              ),
+              // 图例
+              SizedBox(
+                height: legendHeight,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(top: BorderSide(color: Colors.grey[300]!)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(width: 8, height: 8, decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(2))),
+                      SizedBox(width: 2),
+                      Text('有', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                      SizedBox(width: 6),
+                      Container(width: 8, height: 8, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(2))),
+                      SizedBox(width: 2),
+                      Text('无', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[100],
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      '有',
-                      style: TextStyle(
-                        fontSize: legendFontSize,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      '无',
-                      style: TextStyle(
-                        fontSize: legendFontSize,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
+              ),
+              // 球队筛选面板
+              SizedBox(
+                height: teamFilterHeight,
+                child: _buildTeamFilterPanel(panelWidth, isNarrow ? (teamFontSize - 1) : teamFontSize),
               ),
             ],
           ),
@@ -374,111 +423,173 @@ class _MatchesPageState extends State<MatchesPage> {
     );
   }
 
-  Widget _buildCalendarGrid(Set<DateTime> matchDates, double dayFontSize) {
-    if (matchDates.isEmpty) {
-      return GridView.builder(
-        padding: const EdgeInsets.all(2),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 7,
-          childAspectRatio: 1,
-        ),
-        itemCount: 42,
-        itemBuilder: (context, index) => const SizedBox.shrink(),
-      );
-    }
-
-    final firstDayOfMonth = DateTime(
-      _currentMonth.year,
-      _currentMonth.month,
-      1,
+  Widget _buildTeamFilterPanel(double panelWidth, double fontSize) {
+    final allTeams = _allTeams.toList()..sort();
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        border: Border(top: BorderSide(color: Colors.grey[300]!)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (_selectedTeams.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: GestureDetector(
+                onTap: _clearTeamFilter,
+                child: Text(
+                  '清除筛选',
+                  style: TextStyle(fontSize: fontSize, color: Colors.blue[600]),
+                ),
+              ),
+            ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 4,
+                runSpacing: 2,
+                children: allTeams.map((team) {
+                  final isSelected = _selectedTeams.contains(team);
+                  return GestureDetector(
+                    onTap: () => _toggleTeam(team),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: isSelected ? Colors.blue : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        team.replaceAll('队', ''),
+                        style: TextStyle(
+                          fontSize: fontSize,
+                          color: isSelected ? Colors.white : Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
-    final daysInMonth = DateTime(
-      _currentMonth.year,
-      _currentMonth.month + 1,
-      0,
-    ).day;
+  }
+
+  Widget _buildCalendarGridFixed(Set<DateTime> matchDates, double rowHeight, double fontSize) {
+    final firstDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month, 1);
+    final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
     final firstWeekday = firstDayOfMonth.weekday % 7;
 
     final matchDatesInMonth = <int>{};
     for (final date in matchDates) {
-      if (date.year == _currentMonth.year &&
-          date.month == _currentMonth.month) {
+      if (date.year == _currentMonth.year && date.month == _currentMonth.month) {
         matchDatesInMonth.add(date.day);
       }
     }
 
+    // 构建6行数据
+    final rows = <Widget>[];
+    for (int row = 0; row < 6; row++) {
+      final cells = <Widget>[];
+      for (int col = 0; col < 7; col++) {
+        final index = row * 7 + col;
+        final dayNumber = index - firstWeekday + 1;
+        if (dayNumber < 1 || dayNumber > daysInMonth) {
+          cells.add(Expanded(child: Container()));
+        } else {
+          final date = DateTime(_currentMonth.year, _currentMonth.month, dayNumber);
+          final hasMatch = matchDatesInMonth.contains(dayNumber);
+          final isToday = _isToday(date);
+          cells.add(
+            Expanded(
+              child: GestureDetector(
+                onTap: hasMatch ? () => _scrollToDate(date) : null,
+                child: Container(
+                  margin: const EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
+                      width: isToday ? 2 : 1,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '$dayNumber',
+                      style: TextStyle(
+                        fontSize: fontSize.clamp(8.0, 14.0),
+                        fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
+                        color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : (date.weekday == DateTime.sunday || date.weekday == DateTime.saturday ? Colors.grey[500] : Colors.grey[600]),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+      }
+      rows.add(
+        SizedBox(
+          height: rowHeight - 2,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Row(children: cells),
+          ),
+        ),
+      );
+    }
+    return Column(children: rows);
+  }
+
+  Widget _buildCalendarGrid(Set<DateTime> matchDates, double dayFontSize) {
     return GridView.builder(
       padding: const EdgeInsets.all(2),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
         childAspectRatio: 1,
       ),
       itemCount: 42,
       itemBuilder: (context, index) {
+        final firstDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month, 1);
+        final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
+        final firstWeekday = firstDayOfMonth.weekday % 7;
         final dayNumber = index - firstWeekday + 1;
         if (dayNumber < 1 || dayNumber > daysInMonth) {
           return const SizedBox.shrink();
         }
-
-        final date = DateTime(
-          _currentMonth.year,
-          _currentMonth.month,
-          dayNumber,
-        );
-        final hasMatch = matchDatesInMonth.contains(dayNumber);
+        final date = DateTime(_currentMonth.year, _currentMonth.month, dayNumber);
+        final hasMatch = matchDates.any((d) => d.year == date.year && d.month == date.month && d.day == date.day);
         final isToday = _isToday(date);
-
-        return LayoutBuilder(
-          builder: (context, cellConstraints) {
-            // 根据单元格宽度自适应字体大小
-            final cellFontSize = (cellConstraints.maxWidth / 2.5).clamp(
-              10.0,
-              18.0,
-            );
-            return GestureDetector(
-              onTap: hasMatch ? () => _scrollToDate(date) : null,
-              child: Container(
-                margin: const EdgeInsets.all(1),
-                decoration: BoxDecoration(
-                  color: isToday
-                      ? Colors.orange[100]
-                      : hasMatch
-                      ? Colors.blue[100]
-                      : Colors.grey[200],
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(
-                    color: isToday && hasMatch
-                        ? Colors.blue
-                        : (isToday
-                              ? Colors.orange
-                              : (hasMatch
-                                    ? Colors.blue[300]!
-                                    : Colors.transparent)),
-                    width: isToday ? 2 : 1,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    '$dayNumber',
-                    style: TextStyle(
-                      fontSize: cellFontSize,
-                      fontWeight: hasMatch || isToday
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      color: isToday
-                          ? Colors.orange[800]
-                          : hasMatch
-                          ? Colors.blue[800]
-                          : date.weekday == DateTime.sunday ||
-                                date.weekday == DateTime.saturday
-                          ? Colors.grey[500]
-                          : Colors.grey[600],
-                    ),
-                  ),
+        return GestureDetector(
+          onTap: hasMatch ? () => _scrollToDate(date) : null,
+          child: Container(
+            margin: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
+              color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
+                width: isToday ? 2 : 1,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '$dayNumber',
+                style: TextStyle(
+                  fontSize: dayFontSize.clamp(8.0, 14.0),
+                  fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
+                  color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : Colors.grey[600],
                 ),
               ),
-            );
-          },
+            ),
+          ),
         );
       },
     );
