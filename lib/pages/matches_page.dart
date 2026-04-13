@@ -187,13 +187,17 @@ class _MatchesPageState extends State<MatchesPage> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final isWideScreen = screenWidth > 600;
-    final sidebarWidth = _isCalendarCollapsed ? 0.0 : (isWideScreen ? 200.0 : screenWidth / 3);
+    final sidebarWidth = _isCalendarCollapsed
+        ? 0.0
+        : (isWideScreen ? 200.0 : screenWidth / 3);
 
     return Stack(
       children: [
         SingleChildScrollView(
           controller: _scrollController,
-          padding: EdgeInsets.only(right: sidebarWidth + (sidebarWidth > 0 ? 10 : 0)),
+          padding: EdgeInsets.only(
+            right: sidebarWidth + (sidebarWidth > 0 ? 10 : 0),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -253,17 +257,23 @@ class _MatchesPageState extends State<MatchesPage> {
               right: 0,
               child: SizedBox(
                 width: 200,
-                child: _buildCalendarPanel(matchDates, maxHeight: screenHeight * 0.75),
+                child: _buildCalendarPanel(
+                  matchDates,
+                  maxHeight: screenHeight * 0.75,
+                ),
               ),
             )
-            else
+          else
             Positioned(
               top: 36,
               right: 0,
               child: SizedBox(
                 width: screenWidth / 3,
                 height: screenHeight * 0.75,
-                child: _buildCalendarPanel(matchDates, maxHeight: screenHeight * 0.75),
+                child: _buildCalendarPanel(
+                  matchDates,
+                  maxHeight: screenHeight * 0.75,
+                ),
               ),
             ),
       ],
@@ -271,12 +281,14 @@ class _MatchesPageState extends State<MatchesPage> {
   }
 
   Widget _buildCalendarPanel(Set<DateTime>? matchDates, {double? maxHeight}) {
-    if (matchDates == null) matchDates = {};
+    matchDates ??= {};
     return LayoutBuilder(
       builder: (context, constraints) {
         final panelWidth = constraints.maxWidth;
         final isNarrow = panelWidth < 100;
-        final titleFontSize = isNarrow ? 10.0 : (panelWidth / 15).clamp(10.0, 14.0);
+        final titleFontSize = isNarrow
+            ? 10.0
+            : (panelWidth / 15).clamp(10.0, 14.0);
         final dayFontSize = (panelWidth / 28).clamp(8.0, 12.0);
         final legendFontSize = (panelWidth / 28).clamp(8.0, 12.0);
         final teamFontSize = (panelWidth / 22).clamp(10.0, 14.0); // 球队字体稍大
@@ -286,7 +298,6 @@ class _MatchesPageState extends State<MatchesPage> {
         final weekdayRowHeight = isNarrow ? 18.0 : 22.0;
         final legendHeight = isNarrow ? 24.0 : 28.0;
         final teamFilterHeight = isNarrow ? 120.0 : 80.0;
-        final fixedHeight = headerHeight + weekdayRowHeight + legendHeight + teamFilterHeight + 12;
         // 正方形：行高 = 单元格宽度
         final cellWidth = (panelWidth - 4) / 7;
         final rowHeight = cellWidth;
@@ -307,7 +318,9 @@ class _MatchesPageState extends State<MatchesPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey[200]!),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -315,7 +328,10 @@ class _MatchesPageState extends State<MatchesPage> {
                       SizedBox(
                         width: isNarrow ? 24 : panelWidth * 0.15,
                         child: IconButton(
-                          icon: Icon(Icons.chevron_left, size: isNarrow ? 18 : panelWidth * 0.08),
+                          icon: Icon(
+                            Icons.chevron_left,
+                            size: isNarrow ? 18 : panelWidth * 0.08,
+                          ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           onPressed: () {
@@ -342,7 +358,10 @@ class _MatchesPageState extends State<MatchesPage> {
                       SizedBox(
                         width: isNarrow ? 24 : panelWidth * 0.15,
                         child: IconButton(
-                          icon: Icon(Icons.chevron_right, size: isNarrow ? 18 : panelWidth * 0.08),
+                          icon: Icon(
+                            Icons.chevron_right,
+                            size: isNarrow ? 18 : panelWidth * 0.08,
+                          ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           onPressed: () {
@@ -373,7 +392,9 @@ class _MatchesPageState extends State<MatchesPage> {
                           w,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: w == '日' || w == '六' ? Colors.red : Colors.black,
+                            color: w == '日' || w == '六'
+                                ? Colors.red
+                                : Colors.black,
                             fontSize: dayFontSize,
                           ),
                           textAlign: TextAlign.center,
@@ -386,7 +407,11 @@ class _MatchesPageState extends State<MatchesPage> {
               // 日期网格
               SizedBox(
                 height: gridHeight > 0 ? gridHeight : 100,
-                child: _buildCalendarGridFixed(matchDates!, rowHeight > 0 ? rowHeight : 16, dayFontSize),
+                child: _buildCalendarGridFixed(
+                  matchDates!,
+                  rowHeight > 0 ? rowHeight : 16,
+                  dayFontSize,
+                ),
               ),
               // 图例
               SizedBox(
@@ -400,13 +425,39 @@ class _MatchesPageState extends State<MatchesPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(width: 8, height: 8, decoration: BoxDecoration(color: Colors.blue[100], borderRadius: BorderRadius.circular(2))),
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[100],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
                       SizedBox(width: 2),
-                      Text('有', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                      Text(
+                        '有',
+                        style: TextStyle(
+                          fontSize: legendFontSize,
+                          color: Colors.grey[700],
+                        ),
+                      ),
                       SizedBox(width: 6),
-                      Container(width: 8, height: 8, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(2))),
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
                       SizedBox(width: 2),
-                      Text('无', style: TextStyle(fontSize: legendFontSize, color: Colors.grey[700])),
+                      Text(
+                        '无',
+                        style: TextStyle(
+                          fontSize: legendFontSize,
+                          color: Colors.grey[700],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -414,7 +465,10 @@ class _MatchesPageState extends State<MatchesPage> {
               // 球队筛选面板
               SizedBox(
                 height: teamFilterHeight,
-                child: _buildTeamFilterPanel(panelWidth, isNarrow ? (teamFontSize - 1) : teamFontSize),
+                child: _buildTeamFilterPanel(
+                  panelWidth,
+                  isNarrow ? (teamFontSize - 1) : teamFontSize,
+                ),
               ),
             ],
           ),
@@ -455,7 +509,10 @@ class _MatchesPageState extends State<MatchesPage> {
                   return GestureDetector(
                     onTap: () => _toggleTeam(team),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: isSelected ? Colors.blue : Colors.grey[200],
                         borderRadius: BorderRadius.circular(4),
@@ -478,14 +535,27 @@ class _MatchesPageState extends State<MatchesPage> {
     );
   }
 
-  Widget _buildCalendarGridFixed(Set<DateTime> matchDates, double rowHeight, double fontSize) {
-    final firstDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month, 1);
-    final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
+  Widget _buildCalendarGridFixed(
+    Set<DateTime> matchDates,
+    double rowHeight,
+    double fontSize,
+  ) {
+    final firstDayOfMonth = DateTime(
+      _currentMonth.year,
+      _currentMonth.month,
+      1,
+    );
+    final daysInMonth = DateTime(
+      _currentMonth.year,
+      _currentMonth.month + 1,
+      0,
+    ).day;
     final firstWeekday = firstDayOfMonth.weekday % 7;
 
     final matchDatesInMonth = <int>{};
     for (final date in matchDates) {
-      if (date.year == _currentMonth.year && date.month == _currentMonth.month) {
+      if (date.year == _currentMonth.year &&
+          date.month == _currentMonth.month) {
         matchDatesInMonth.add(date.day);
       }
     }
@@ -500,7 +570,11 @@ class _MatchesPageState extends State<MatchesPage> {
         if (dayNumber < 1 || dayNumber > daysInMonth) {
           cells.add(Expanded(child: Container()));
         } else {
-          final date = DateTime(_currentMonth.year, _currentMonth.month, dayNumber);
+          final date = DateTime(
+            _currentMonth.year,
+            _currentMonth.month,
+            dayNumber,
+          );
           final hasMatch = matchDatesInMonth.contains(dayNumber);
           final isToday = _isToday(date);
           cells.add(
@@ -510,10 +584,20 @@ class _MatchesPageState extends State<MatchesPage> {
                 child: Container(
                   margin: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                    color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
+                    color: isToday
+                        ? Colors.orange[100]
+                        : hasMatch
+                        ? Colors.blue[100]
+                        : Colors.grey[200],
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(
-                      color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
+                      color: isToday && hasMatch
+                          ? Colors.blue
+                          : (isToday
+                                ? Colors.orange
+                                : (hasMatch
+                                      ? Colors.blue[300]!
+                                      : Colors.transparent)),
                       width: isToday ? 2 : 1,
                     ),
                   ),
@@ -522,8 +606,17 @@ class _MatchesPageState extends State<MatchesPage> {
                       '$dayNumber',
                       style: TextStyle(
                         fontSize: fontSize.clamp(8.0, 14.0),
-                        fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
-                        color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : (date.weekday == DateTime.sunday || date.weekday == DateTime.saturday ? Colors.grey[500] : Colors.grey[600]),
+                        fontWeight: hasMatch || isToday
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color: isToday
+                            ? Colors.orange[800]
+                            : hasMatch
+                            ? Colors.blue[800]
+                            : (date.weekday == DateTime.sunday ||
+                                      date.weekday == DateTime.saturday
+                                  ? Colors.grey[500]
+                                  : Colors.grey[600]),
                       ),
                     ),
                   ),
@@ -544,55 +637,6 @@ class _MatchesPageState extends State<MatchesPage> {
       );
     }
     return Column(children: rows);
-  }
-
-  Widget _buildCalendarGrid(Set<DateTime> matchDates, double dayFontSize) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(2),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 7,
-        childAspectRatio: 1,
-      ),
-      itemCount: 42,
-      itemBuilder: (context, index) {
-        final firstDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month, 1);
-        final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
-        final firstWeekday = firstDayOfMonth.weekday % 7;
-        final dayNumber = index - firstWeekday + 1;
-        if (dayNumber < 1 || dayNumber > daysInMonth) {
-          return const SizedBox.shrink();
-        }
-        final date = DateTime(_currentMonth.year, _currentMonth.month, dayNumber);
-        final hasMatch = matchDates.any((d) => d.year == date.year && d.month == date.month && d.day == date.day);
-        final isToday = _isToday(date);
-        return GestureDetector(
-          onTap: hasMatch ? () => _scrollToDate(date) : null,
-          child: Container(
-            margin: const EdgeInsets.all(1),
-            decoration: BoxDecoration(
-              color: isToday ? Colors.orange[100] : hasMatch ? Colors.blue[100] : Colors.grey[200],
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(
-                color: isToday && hasMatch ? Colors.blue : (isToday ? Colors.orange : (hasMatch ? Colors.blue[300]! : Colors.transparent)),
-                width: isToday ? 2 : 1,
-              ),
-            ),
-            child: Center(
-              child: Text(
-                '$dayNumber',
-                style: TextStyle(
-                  fontSize: dayFontSize.clamp(8.0, 14.0),
-                  fontWeight: hasMatch || isToday ? FontWeight.bold : FontWeight.normal,
-                  color: isToday ? Colors.orange[800] : hasMatch ? Colors.blue[800] : Colors.grey[600],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 
   bool _isToday(DateTime date) {
