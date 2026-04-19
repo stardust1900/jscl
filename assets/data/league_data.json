@@ -120,10 +120,23 @@
       "homeTeam": "宿迁队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "主队胜",
       "venue": "宿迁奥体中心体育场",
-      "homeGoals": [],
+      "homeGoals": [
+        {
+          "playerName": "张桐瑞",
+          "minute": 4,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "张桐瑞",
+          "minute": 24,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
       "awayGoals": []
     },
     {
@@ -132,11 +145,25 @@
       "homeTeam": "淮安队",
       "awayTeam": "扬州队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "平局",
       "venue": "淮安市体育中心体育场",
-      "homeGoals": [],
-      "awayGoals": []
+      "homeGoals": [
+        {
+          "playerName": "何健",
+          "minute": 66,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "徐君",
+          "minute": 54,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ]
     },
     {
       "id": "7",
@@ -144,10 +171,29 @@
       "homeTeam": "徐州队",
       "awayTeam": "泰州队",
       "time": "19:40",
-      "status": "未开始",
-      "result": "",
+      "status": "已结束",
+      "result": "主队胜",
       "venue": "徐州奥体中心体育场",
-      "homeGoals": [],
+      "homeGoals": [
+        {
+          "playerName": "杨旭东",
+          "minute": 67,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "苗润东",
+          "minute": 79,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "苗润东",
+          "minute": 86,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
       "awayGoals": []
     },
     {
