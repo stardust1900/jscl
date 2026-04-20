@@ -80,6 +80,33 @@ class _MatchesPageState extends State<MatchesPage> {
   void initState() {
     super.initState();
     _processMatches();
+    // 页面加载后滚动到离当前日期最近的赛程
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToNearestMatch();
+    });
+  }
+
+  void _scrollToNearestMatch() {
+    if (_sortedDates.isEmpty) return;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    // 找到离今天最近的日期
+    DateTime? nearestDate;
+    int minDiff = -1;
+
+    for (final date in _sortedDates) {
+      final diff = date.difference(today).inDays.abs();
+      if (minDiff == -1 || diff < minDiff) {
+        minDiff = diff;
+        nearestDate = date;
+      }
+    }
+
+    if (nearestDate != null) {
+      _scrollToDate(nearestDate);
+    }
   }
 
   @override
@@ -240,13 +267,19 @@ class _MatchesPageState extends State<MatchesPage> {
         Positioned(
           top: 0,
           right: 0,
-          child: IconButton(
-            icon: Icon(
-              _isCalendarCollapsed ? Icons.chevron_left : Icons.chevron_right,
-              color: Colors.grey[600],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(4),
             ),
-            onPressed: _toggleCalendarCollapse,
-            tooltip: _isCalendarCollapsed ? '展开日历' : '收起日历',
+            child: IconButton(
+              icon: Icon(
+                _isCalendarCollapsed ? Icons.chevron_left : Icons.chevron_right,
+                color: Colors.grey[600],
+              ),
+              onPressed: _toggleCalendarCollapse,
+              tooltip: _isCalendarCollapsed ? '展开日历' : '收起日历',
+            ),
           ),
         ),
         // 日历面板和球队筛选
