@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:html' as html;
+import 'package:web/web.dart' show window;
 import 'models/league_data.dart';
 import 'services/data_service.dart';
 import 'pages/matches_page.dart';
@@ -114,7 +114,7 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
             onPressed: () {
               // Web 环境下使用浏览器原生刷新，重新加载整个页面包括图片和 JS
               if (kIsWeb) {
-                html.window.location.reload();
+                window.location.reload();
               } else {
                 // 非 Web 环境下重新加载数据
                 setState(() {
