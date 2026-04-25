@@ -202,8 +202,11 @@
       "homeTeam": "连云港队",
       "awayTeam": "无锡队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "连云港市体育中心体育场"
+      "status": "已结束",
+      "venue": "连云港市体育中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "9",
@@ -211,8 +214,11 @@
       "homeTeam": "南通队",
       "awayTeam": "徐州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南通体育会展中心体育场"
+      "status": "已结束",
+      "venue": "南通体育会展中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "10",
@@ -220,8 +226,18 @@
       "homeTeam": "盐城队",
       "awayTeam": "宿迁队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "盐城奥体中心体育场"
+      "status": "已结束",
+      "venue": "盐城奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "花志成",
+          "minute": 79,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "11",
