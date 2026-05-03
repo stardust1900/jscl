@@ -338,14 +338,6 @@
       "venue": "镇江市体育会展中心体育场",
       "awayGoals": [
         {
-          "playerName": "康振捷",
-          "minute": 29,
-          "isPenalty": false,
-          "isOwnGoal": false
-        }
-      ],
-      "homeGoals": [
-        {
           "playerName": "郑华",
           "minute": 62,
           "isPenalty": false,
@@ -354,6 +346,14 @@
         {
           "playerName": "花志成",
           "minute": 73,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "康振捷",
+          "minute": 29,
           "isPenalty": false,
           "isOwnGoal": false
         }
