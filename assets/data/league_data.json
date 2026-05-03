@@ -245,8 +245,31 @@
       "homeTeam": "南京队",
       "awayTeam": "常州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南京奥体中心体育场"
+      "status": "已结束",
+      "venue": "南京奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "吴浩民",
+          "minute": 5,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "滕帅",
+          "minute": 20,
+          "isPenalty": true,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "滕帅",
+          "minute": 76,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "12",
@@ -254,8 +277,37 @@
       "homeTeam": "泰州队",
       "awayTeam": "扬州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "泰州体育公园体育场"
+      "status": "已结束",
+      "venue": "泰州体育公园体育场",
+      "homeGoals": [
+        {
+          "playerName": "额里布格",
+          "minute": 10,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "刘俊伯伯",
+          "minute": 19,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "于子然",
+          "minute": 94,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "胡志锋",
+          "minute": 71,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "13",
@@ -263,8 +315,18 @@
       "homeTeam": "苏州队",
       "awayTeam": "淮安队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "常熟市体育中心体育场"
+      "status": "已结束",
+      "venue": "常熟市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "曹联铨",
+          "minute": 11,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "14",
@@ -272,8 +334,31 @@
       "homeTeam": "镇江队",
       "awayTeam": "盐城队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "镇江市体育会展中心体育场"
+      "status": "已结束",
+      "venue": "镇江市体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "康振捷",
+          "minute": 29,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "郑华",
+          "minute": 62,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "花志成",
+          "minute": 73,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "15",
