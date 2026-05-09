@@ -366,8 +366,37 @@
       "homeTeam": "无锡队",
       "awayTeam": "泰州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "宜兴市体育中心体育场"
+      "status": "已结束",
+      "venue": "宜兴市体育中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "吴硕涛",
+          "minute": 40,
+          "isPenalty": false,
+          "isOwnGoal": true
+        },
+        {
+          "playerName": "许亚晖",
+          "minute": 55,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "刘宇豪",
+          "minute": 63,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "祝晖",
+          "minute": 46,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "16",
@@ -375,8 +404,11 @@
       "homeTeam": "南通队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南通体育会展中心体育场"
+      "status": "已结束",
+      "venue": "南通体育会展中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "17",
@@ -384,8 +416,31 @@
       "homeTeam": "徐州队",
       "awayTeam": "宿迁队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "徐州奥体中心体育场"
+      "status": "已结束",
+      "venue": "徐州奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "高驰",
+          "minute": 9,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "高驰",
+          "minute": 91,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "苗润东",
+          "minute": 40,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "18",
