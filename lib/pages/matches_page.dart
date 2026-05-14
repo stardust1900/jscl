@@ -17,7 +17,7 @@ class _MatchesPageState extends State<MatchesPage> {
   List<DateTime> _sortedDates = [];
   Set<DateTime> _matchDates = {};
   Map<DateTime, GlobalKey> _dateKeys = {};
-  bool _isCalendarCollapsed = false; // 日历收起状态
+  bool _isCalendarCollapsed = true; // 日历收起状态（手机端默认收起）
   Set<String> _selectedTeams = {}; // 选中的球队
 
   // 获取所有球队列表
@@ -224,6 +224,7 @@ class _MatchesPageState extends State<MatchesPage> {
           controller: _scrollController,
           padding: EdgeInsets.only(
             right: sidebarWidth + (sidebarWidth > 0 ? 10 : 0),
+            top: 48, // 为顶部按钮留出空间
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,19 +264,26 @@ class _MatchesPageState extends State<MatchesPage> {
             ],
           ),
         ),
-        // 日历收起按钮
+        // 日历收起按钮（放在内容层上面，不受padding影响）
         Positioned(
-          top: 0,
-          right: 0,
+          top: 8,
+          right: 8,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(4),
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: IconButton(
               icon: Icon(
-                _isCalendarCollapsed ? Icons.chevron_left : Icons.chevron_right,
-                color: Colors.grey[600],
+                _isCalendarCollapsed ? Icons.calendar_month : Icons.close,
+                color: Colors.white,
               ),
               onPressed: _toggleCalendarCollapse,
               tooltip: _isCalendarCollapsed ? '展开日历' : '收起日历',
@@ -286,7 +294,7 @@ class _MatchesPageState extends State<MatchesPage> {
         if (!_isCalendarCollapsed)
           if (isWideScreen)
             Positioned(
-              top: 36,
+              top: 48,
               right: 0,
               child: SizedBox(
                 width: 200,
@@ -298,7 +306,7 @@ class _MatchesPageState extends State<MatchesPage> {
             )
           else
             Positioned(
-              top: 36,
+              top: 48,
               right: 0,
               child: SizedBox(
                 width: screenWidth / 3,
