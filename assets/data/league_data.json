@@ -448,8 +448,31 @@
       "homeTeam": "常州队",
       "awayTeam": "淮安队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "常州奥体中心体育场"
+      "status": "已结束",
+      "venue": "常州奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "葛蕴智",
+          "minute": 23,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "余涵",
+          "minute": 49,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "胡铭鹏",
+          "minute": 78,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "19",
@@ -457,8 +480,37 @@
       "homeTeam": "苏州队",
       "awayTeam": "连云港队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "昆山奥体中心足球场"
+      "status": "已结束",
+      "venue": "昆山奥体中心足球场",
+      "homeGoals": [
+        {
+          "playerName": "周光国",
+          "minute": 1,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "周光国",
+          "minute": 16,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "李团杰",
+          "minute": 32,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "嵇皓翔",
+          "minute": 46,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "20",
@@ -466,8 +518,18 @@
       "homeTeam": "扬州队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "扬州体育公园体育场"
+      "status": "已结束",
+      "venue": "扬州体育公园体育场",
+      "homeGoals": [
+        {
+          "playerName": "井新博",
+          "minute": 62,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "21",
