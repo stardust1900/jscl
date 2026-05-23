@@ -537,8 +537,18 @@
       "homeTeam": "淮安队",
       "awayTeam": "盐城队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "淮安市体育中心体育场"
+      "status": "已结束",
+      "venue": "淮安市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "张宇",
+          "minute": 52,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "22",
@@ -546,8 +556,37 @@
       "homeTeam": "连云港队",
       "awayTeam": "徐州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "连云港市体育中心体育场"
+      "status": "已结束",
+      "venue": "连云港市体育中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "武浩然",
+          "minute": 21,
+          "isPenalty": false,
+          "isOwnGoal": true
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "马艺鸣",
+          "minute": 42,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "苗润东",
+          "minute": 55,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "杨旭东",
+          "minute": 78,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "23",
@@ -555,8 +594,31 @@
       "homeTeam": "宿迁队",
       "awayTeam": "南通队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "宿迁奥体中心体育场"
+      "status": "已结束",
+      "venue": "宿迁奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "房政阳",
+          "minute": 8,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "覃虹皓",
+          "minute": 25,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "叶道驰",
+          "minute": 59,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "24",
