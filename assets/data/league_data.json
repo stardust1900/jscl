@@ -626,8 +626,31 @@
       "homeTeam": "泰州队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "泰州体育公园体育场"
+      "status": "已结束",
+      "venue": "泰州体育公园体育场",
+      "homeGoals": [
+        {
+          "playerName": "刘俊伯",
+          "minute": 10,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "闫浩",
+          "minute": 44,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "寇程",
+          "minute": 77,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "25",
@@ -635,8 +658,18 @@
       "homeTeam": "盐城队",
       "awayTeam": "扬州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "盐城奥体中心体育场"
+      "status": "已结束",
+      "venue": "盐城奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "张文骏",
+          "minute": 50,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "26",
@@ -644,8 +677,24 @@
       "homeTeam": "镇江队",
       "awayTeam": "常州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "镇江市体育会展中心体育场"
+      "status": "已结束",
+      "venue": "镇江市体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "李霄鹏",
+          "minute": 12,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "张康杰",
+          "minute": 52,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "27",
@@ -653,8 +702,11 @@
       "homeTeam": "无锡队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "江阴市体育中心体育场"
+      "status": "已结束",
+      "venue": "江阴市体育中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "28",
