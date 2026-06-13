@@ -714,8 +714,18 @@
       "homeTeam": "徐州队",
       "awayTeam": "无锡队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "徐州奥体中心体育场"
+      "status": "已结束",
+      "venue": "徐州奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "卢则灵",
+          "minute": 15,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "29",
@@ -723,8 +733,30 @@
       "homeTeam": "宿迁队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "宿迁奥体中心体育场"
+      "status": "已结束",
+      "venue": "宿迁奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "高驰",
+          "minute": 35,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "殷国翔",
+          "minute": 84,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "陈力行",
+          "minute": 93,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "30",
@@ -732,8 +764,18 @@
       "homeTeam": "南通队",
       "awayTeam": "泰州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南通体育会展中心体育场"
+      "status": "已结束",
+      "venue": "南通体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "吴硕涛",
+          "minute": 86,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "31",
