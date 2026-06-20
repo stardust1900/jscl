@@ -783,8 +783,31 @@
       "homeTeam": "常州队",
       "awayTeam": "盐城队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "常州奥体中心体育场"
+      "status": "已结束",
+      "venue": "常州奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "吴浩民",
+          "minute": 49,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "吴浩民",
+          "minute": 56,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "胡书铭",
+          "minute": 83,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "32",
@@ -792,8 +815,18 @@
       "homeTeam": "扬州队",
       "awayTeam": "连云港队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "扬州体育公园体育场"
+      "status": "已结束",
+      "venue": "扬州体育公园体育场",
+      "homeGoals": [
+        {
+          "playerName": "王啸",
+          "minute": 35,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "33",
@@ -801,8 +834,37 @@
       "homeTeam": "苏州队",
       "awayTeam": "南通队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "苏州市体育中心体育场"
+      "status": "已结束",
+      "venue": "苏州市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "潘万权",
+          "minute": 34,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "李贤成",
+          "minute": 71,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "赵文锦",
+          "minute": 58,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "周玉铭",
+          "minute": 73,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "34",
@@ -810,8 +872,31 @@
       "homeTeam": "南京队",
       "awayTeam": "淮安队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南京奥体中心体育场"
+      "status": "已结束",
+      "venue": "南京奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "滕帅",
+          "minute": 63,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "滕帅",
+          "minute": 70,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "花姜敏",
+          "minute": 69,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "35",
