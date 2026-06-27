@@ -904,8 +904,37 @@
       "homeTeam": "淮安队",
       "awayTeam": "无锡队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "淮安市体育中心体育场"
+      "status": "已结束",
+      "venue": "淮安市体育中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "葛蕴智",
+          "minute": 26,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "谢志伟",
+          "minute": 60,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "刘宇豪",
+          "minute": 69,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "邓建飞",
+          "minute": 82,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "36",
@@ -913,8 +942,24 @@
       "homeTeam": "镇江队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "镇江市体育会展中心体育场"
+      "status": "已结束",
+      "venue": "镇江市体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "张凌峰",
+          "minute": 4,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "马天宇",
+          "minute": 11,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "37",
@@ -922,8 +967,18 @@
       "homeTeam": "连云港队",
       "awayTeam": "常州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "连云港市体育中心体育场"
+      "status": "已结束",
+      "venue": "连云港市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "吴浩民",
+          "minute": 85,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "38",
