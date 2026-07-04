@@ -986,8 +986,11 @@
       "homeTeam": "盐城队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "盐城奥体中心体育场"
+      "status": "已结束",
+      "venue": "盐城奥体中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "39",
@@ -995,8 +998,49 @@
       "homeTeam": "无锡队",
       "awayTeam": "宿迁队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "江阴市体育中心体育场"
+      "status": "已结束",
+      "venue": "江阴市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "陈力行",
+          "minute": 35,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "康乐强",
+          "minute": 58,
+          "isPenalty": false,
+          "isOwnGoal": true
+        },
+        {
+          "playerName": "高驰",
+          "minute": 65,
+          "isPenalty": true,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "高驰",
+          "minute": 67,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "林子强",
+          "minute": 49,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "刘宇豪",
+          "minute": 76,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜"
     },
     {
       "id": "40",
@@ -1004,8 +1048,25 @@
       "homeTeam": "泰州队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "泰州体育公园体育场"
+      "status": "已结束",
+      "venue": "泰州体育公园体育场",
+      "homeGoals": [
+        {
+          "playerName": "祝晖",
+          "minute": 53,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "纪龙刚",
+          "minute": 67,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "41",
@@ -1013,8 +1074,18 @@
       "homeTeam": "徐州队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "徐州奥体中心体育场"
+      "status": "已结束",
+      "venue": "徐州奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "乔宇",
+          "minute": 2,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "42",
