@@ -1036,7 +1036,7 @@
         {
           "playerName": "刘宇豪",
           "minute": 76,
-          "isPenalty": false,
+          "isPenalty": true,
           "isOwnGoal": false
         }
       ],
