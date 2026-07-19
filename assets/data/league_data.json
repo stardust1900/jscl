@@ -1093,8 +1093,30 @@
       "homeTeam": "宿迁队",
       "awayTeam": "常州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "宿迁奥体中心体育场"
+      "status": "已结束",
+      "venue": "宿迁奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "吴浩民",
+          "minute": 32,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "张康杰",
+          "minute": 72,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "侯佳皓",
+          "minute": 90,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "43",
@@ -1111,8 +1133,25 @@
       "homeTeam": "南通队",
       "awayTeam": "扬州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南通体育会展中心体育场"
+      "status": "已结束",
+      "venue": "南通体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "崔钧贤",
+          "minute": 2,
+          "isPenalty": false,
+          "isOwnGoal": true
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "程鑫",
+          "minute": 48,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "45",
