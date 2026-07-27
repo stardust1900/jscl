@@ -1124,8 +1124,11 @@
       "homeTeam": "南京队",
       "awayTeam": "连云港队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南京五台山体育中心体育场"
+      "status": "已结束",
+      "venue": "南京五台山体育中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "44",
@@ -1159,8 +1162,31 @@
       "homeTeam": "镇江队",
       "awayTeam": "淮安队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "镇江市体育会展中心体育场"
+      "status": "已结束",
+      "venue": "镇江市体育会展中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "肖陈亚",
+          "minute": 3,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "肖陈亚",
+          "minute": 7,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "余涵",
+          "minute": 25,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜"
     },
     {
       "id": "46",
@@ -1168,8 +1194,18 @@
       "homeTeam": "苏州队",
       "awayTeam": "无锡队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "苏州市体育中心体育场"
+      "status": "已结束",
+      "venue": "苏州市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "谢志伟",
+          "minute": 20,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "47",
@@ -1177,8 +1213,11 @@
       "homeTeam": "常州队",
       "awayTeam": "泰州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "常州奥体中心体育场"
+      "status": "已结束",
+      "venue": "常州奥体中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "48",
@@ -1186,8 +1225,11 @@
       "homeTeam": "扬州队",
       "awayTeam": "徐州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "扬州体育公园体育场"
+      "status": "已结束",
+      "venue": "扬州体育公园体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "49",
