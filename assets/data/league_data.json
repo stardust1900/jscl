@@ -1237,8 +1237,24 @@
       "homeTeam": "盐城队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "盐城奥体中心体育场"
+      "status": "已结束",
+      "venue": "盐城奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "王天润",
+          "minute": 1,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "王天润",
+          "minute": 87,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "50",
@@ -1246,8 +1262,18 @@
       "homeTeam": "淮安队",
       "awayTeam": "南通队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "淮安市体育中心体育场"
+      "status": "已结束",
+      "venue": "淮安市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "郭凯楠",
+          "minute": 37,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "51",
@@ -1255,8 +1281,11 @@
       "homeTeam": "连云港队",
       "awayTeam": "宿迁队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "连云港市体育中心体育场"
+      "status": "已结束",
+      "venue": "连云港市体育中心体育场",
+      "result": "平局",
+      "homeGoals": [],
+      "awayGoals": []
     },
     {
       "id": "52",
