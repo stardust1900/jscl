@@ -1363,8 +1363,18 @@
       "homeTeam": "南通队",
       "awayTeam": "镇江队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南通体育会展中心体育场"
+      "status": "已结束",
+      "venue": "南通体育会展中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "李贤成",
+          "minute": 93,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "56",
@@ -1372,8 +1382,37 @@
       "homeTeam": "宿迁队",
       "awayTeam": "苏州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "宿迁奥体中心体育场"
+      "status": "已结束",
+      "venue": "宿迁奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "卜飞扬",
+          "minute": 11,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "殷国翔",
+          "minute": 84,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "陆子皓",
+          "minute": 48,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "赵文锦",
+          "minute": 74,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "57",
@@ -1381,8 +1420,18 @@
       "homeTeam": "南京队",
       "awayTeam": "扬州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南京奥体中心体育场"
+      "status": "已结束",
+      "venue": "南京奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "吴雷",
+          "minute": 88,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "58",
