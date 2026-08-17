@@ -33,6 +33,8 @@ class LeagueData {
 
   static List<TeamStandings> _calculateStandings(List<Match> matches) {
     final Map<String, Map<String, dynamic>> teamStats = {};
+    // 记录两队直接交锋的胜场：headToHead[胜者][败者] = 胜场数
+    final Map<String, Map<String, int>> headToHead = {};
 
     for (final match in matches) {
       if (!match.isCompleted) continue;
@@ -70,10 +72,14 @@ class LeagueData {
         teamStats[homeTeam]!['won']++;
         teamStats[homeTeam]!['points'] += 3;
         teamStats[awayTeam]!['lost']++;
+        headToHead.putIfAbsent(homeTeam, () => {})[awayTeam] =
+            (headToHead[homeTeam]?[awayTeam] ?? 0) + 1;
       } else if (result == '客队胜') {
         teamStats[awayTeam]!['won']++;
         teamStats[awayTeam]!['points'] += 3;
         teamStats[homeTeam]!['lost']++;
+        headToHead.putIfAbsent(awayTeam, () => {})[homeTeam] =
+            (headToHead[awayTeam]?[homeTeam] ?? 0) + 1;
       } else if (result == '平局') {
         teamStats[homeTeam]!['drawn']++;
         teamStats[awayTeam]!['drawn']++;
@@ -96,6 +102,10 @@ class LeagueData {
 
     standings.sort((a, b) {
       if (b.points != a.points) return b.points - a.points;
+      // 积分相同：先看两队直接交锋的胜负关系，胜利一方靠前
+      final aWins = headToHead[a.teamName]?[b.teamName] ?? 0;
+      final bWins = headToHead[b.teamName]?[a.teamName] ?? 0;
+      if (aWins != bWins) return bWins - aWins;
       final aDiff = a.goalDifference;
       final bDiff = b.goalDifference;
       if (bDiff != aDiff) return bDiff - aDiff;

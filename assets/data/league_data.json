@@ -1138,15 +1138,13 @@
       "time": "19:40",
       "status": "已结束",
       "venue": "南通体育会展中心体育场",
-      "awayGoals": [
+      "homeGoals": [
         {
           "playerName": "崔钧贤",
           "minute": 2,
           "isPenalty": false,
           "isOwnGoal": true
-        }
-      ],
-      "homeGoals": [
+        },
         {
           "playerName": "程鑫",
           "minute": 48,
