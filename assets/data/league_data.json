@@ -1437,8 +1437,18 @@
       "homeTeam": "苏州队",
       "awayTeam": "南京队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "苏州市体育中心体育场"
+      "status": "已结束",
+      "venue": "苏州市体育中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "闫浩",
+          "minute": 45,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "主队胜",
+      "awayGoals": []
     },
     {
       "id": "59",
@@ -1446,8 +1456,25 @@
       "homeTeam": "镇江队",
       "awayTeam": "徐州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "镇江市体育会展中心体育场"
+      "status": "已结束",
+      "venue": "镇江市体育会展中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "陈金炘",
+          "minute": 8,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "肖陈亚",
+          "minute": 33,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "60",
@@ -1455,8 +1482,25 @@
       "homeTeam": "泰州队",
       "awayTeam": "淮安队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "泰州体育公园体育场"
+      "status": "已结束",
+      "venue": "泰州体育公园体育场",
+      "awayGoals": [
+        {
+          "playerName": "余涵",
+          "minute": 20,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "郑博",
+          "minute": 63,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "61",
