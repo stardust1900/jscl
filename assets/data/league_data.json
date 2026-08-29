@@ -1531,6 +1531,14 @@
       "venue": "常州奥体中心体育场",
       "homeGoals": [
         {
+          "playerName": "唐曾琦",
+          "minute": 83,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
           "playerName": "金民明",
           "minute": 50,
           "isPenalty": false,
@@ -1553,12 +1561,10 @@
           "minute": 87,
           "isPenalty": false,
           "isOwnGoal": false
-        }
-      ],
-      "awayGoals": [
+        },
         {
-          "playerName": "唐曾琦",
-          "minute": 83,
+          "playerName": "张葛佳豪",
+          "minute": 94,
           "isPenalty": false,
           "isOwnGoal": false
         }
