@@ -1602,8 +1602,18 @@
       "homeTeam": "连云港队",
       "awayTeam": "南通队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "连云港市体育中心体育场"
+      "status": "已结束",
+      "venue": "连云港市体育中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "金成民",
+          "minute": 74,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "客队胜",
+      "homeGoals": []
     },
     {
       "id": "65",
@@ -1611,8 +1621,25 @@
       "homeTeam": "盐城队",
       "awayTeam": "徐州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "盐城奥体中心体育场"
+      "status": "已结束",
+      "venue": "盐城奥体中心体育场",
+      "awayGoals": [
+        {
+          "playerName": "陈金炘",
+          "minute": 41,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "homeGoals": [
+        {
+          "playerName": "刘嘉伟",
+          "minute": 92,
+          "isPenalty": false,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "66",
@@ -1620,8 +1647,37 @@
       "homeTeam": "南京队",
       "awayTeam": "泰州队",
       "time": "19:40",
-      "status": "未开始",
-      "venue": "南京奥体中心体育场"
+      "status": "已结束",
+      "venue": "南京奥体中心体育场",
+      "homeGoals": [
+        {
+          "playerName": "滕帅",
+          "minute": 1,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "费尔南多",
+          "minute": 13,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "awayGoals": [
+        {
+          "playerName": "额里布格",
+          "minute": 7,
+          "isPenalty": false,
+          "isOwnGoal": false
+        },
+        {
+          "playerName": "栾程",
+          "minute": 16,
+          "isPenalty": true,
+          "isOwnGoal": false
+        }
+      ],
+      "result": "平局"
     },
     {
       "id": "67",
